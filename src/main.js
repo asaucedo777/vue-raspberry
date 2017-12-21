@@ -20,6 +20,31 @@ const vueI18n = new VueI18n({
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  data: {
+    rootData: '99'
+  },
+  beforeCreate () {
+    window.console.log('Esto se ejecuta ANTES de crear la instancia Vue.')
+  },
+  created () {
+    window.console.log('Esto se ejecuta cuando se crea la instancia Vue.')
+  },
+  beforeMount () {
+    window.console.log('Esto se ejecuta ANTES de montar el elemento.')
+  },
+  mounted () {
+    window.console.log('Esto se ejecuta DESPUES de montar el elemento.')
+  },
+  methods: {
+    prueba: () => {
+      window.console.log('haz algo')
+    }
+  },
+  computed: {
+    unaComputed: () => {
+      return this.rootData.reverse().join()
+    }
+  },
   vueI18n,
   render: h => h(App),
   template: '<App/>',
