@@ -1,18 +1,20 @@
 <template>
   <div id="home">
-    <h1>Home vue-raspberry</h1>
+    <h1>{{$t('home')}}</h1>
     <img src=".././assets/raspberry.png" width="100">
     <div>
-      <ui-switch name="switchInterruptor" v-model="interruptor" label="Encender/Apagar LUZ" @input="encenderApagar"></ui-switch>
+      <ui-switch name="switchInterruptor" v-model="interruptor" :label="$t('onOff')" @input="encenderApagar"></ui-switch>
     </div>
     <div>
+      <ui-textbox name="uitextbox" v-model="texto" type="text" :placeholder="$t('Press microphone and speak')"></ui-textbox>
       <ui-fab size="small" color="red" ariaLabel="UiFab" icon="keyboard_voice" @click="escuchar"></ui-fab>
-      <ui-textbox name="uitextbox" v-model="texto" type="text" placeholder="Pulsa el micrófono y habla"></ui-textbox>
     </div>
     <div>
+      <ui-textbox name="uitextbox" v-model="texto" type="text" :placeholder="$t('Press to get statistics')"></ui-textbox>
       <ui-fab size="small" color="red" ariaLabel="UiFab" icon="keyboard_pen" @click="obtenerEstatistics"></ui-fab>
     </div>
     <div>
+      <ui-textbox name="uitextbox" v-model="texto" type="text" :placeholder="$t('Volume control')"></ui-textbox>
       <ui-slider size="small" color="red" ariaLabel="UiSlider" v-model="volumen"></ui-slider>
     </div>
     <pre>Data: {{ $data }}</pre>

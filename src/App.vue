@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <div>
-      <router-link to="/home">Home</router-link>
-      <router-link to="/statistics">Statistics</router-link>
-      <router-link to="/about">About</router-link>
+      <router-link to="/home">{{$t('home')}}</router-link>
+      <router-link to="/statistics">{{$t('statistics')}}</router-link>
+      <router-link to="/about">{{$t('about')}}</router-link>
     </div>
     <router-view></router-view>
   </div>
@@ -14,6 +14,18 @@
     name: 'app',
     data() {
       return {
+      }
+    },
+    watch: {
+      $route(to) {
+        if (to.name && to.name.indexOf('about') !== -1) {
+          window.console.log('Navegación hacia la vista About')
+        }
+      }
+    },
+    methods: {
+      methodApp() {
+        window.console.log('Método de App')
       }
     }
   }

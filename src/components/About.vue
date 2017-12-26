@@ -1,7 +1,7 @@
 <template>
   <div id="about">
-    <h1>About vue-raspberry</h1>
-    <h2>Versión {{ $root.version }}</h2>
+    <h1>{{$t('about')}}</h1>
+    <h2>{{$t('version')}} {{ $root.version }}</h2>
   </div>
 </template>
 

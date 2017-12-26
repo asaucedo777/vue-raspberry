@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
-import Messages from './data/locales'
 import KeenUI from 'keen-ui'
 import 'material-design-icons/iconfont/material-icons.css'
 import 'keen-ui/dist/keen-ui.css'
@@ -8,6 +7,7 @@ import VueRouter from 'vue-router'
 import { routes } from './routes'
 
 import App from './App'
+import { messages } from './data/locales'
 
 Vue.config.productionTip = false
 
@@ -15,10 +15,10 @@ Vue.use(VueI18n)
 Vue.use(KeenUI)
 Vue.use(VueRouter)
 
-// Create VueI18n instance
-const vueI18n = new VueI18n({
+// Create VueI18n instance (the name must be i18n)
+const i18n = new VueI18n({
   locale: 'es',
-  Messages
+  messages
 })
 
 // Vue router
@@ -29,7 +29,7 @@ const router = new VueRouter({
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  vueI18n,
+  i18n,
   router,
   data: {
     version: '1.0',
@@ -54,7 +54,7 @@ new Vue({
   },
   computed: {
     unaComputed: () => {
-      return this.rootData.reverse().join()
+      return this.rootData
     }
   },
   render: h => h(App),

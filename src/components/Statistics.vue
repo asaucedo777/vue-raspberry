@@ -1,7 +1,6 @@
 <template>
   <div id="statistics">
-    <h1>Estadísticas vue-raspberry</h1>
-    <pre>Data: {{ $data }}</pre>
+    <h1>{{$t('statistics')}}</h1>
   </div>
 </template>
 
