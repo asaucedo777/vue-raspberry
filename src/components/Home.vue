@@ -3,19 +3,15 @@
     <h1>{{$t('home')}}</h1>
     <img src=".././assets/raspberry.png" width="100">
     <div>
-      <ui-switch name="switchInterruptor" v-model="interruptor" :label="$t('onOff')" @input="encenderApagar"></ui-switch>
+      <ui-switch name="switchInterruptor" v-model="interruptor" :label="$t('onOff')" @change="encenderApagar"></ui-switch>
     </div>
     <div>
       <ui-textbox name="uitextbox" v-model="texto" type="text" :placeholder="$t('Press microphone and speak')"></ui-textbox>
       <ui-fab size="small" color="red" ariaLabel="UiFab" icon="keyboard_voice" @click="escuchar"></ui-fab>
     </div>
     <div>
-      <ui-textbox name="uitextbox" v-model="texto" type="text" :placeholder="$t('Press to get statistics')"></ui-textbox>
-      <ui-fab size="small" color="red" ariaLabel="UiFab" icon="keyboard_pen" @click="obtenerEstatistics"></ui-fab>
-    </div>
-    <div>
-      <ui-textbox name="uitextbox" v-model="texto" type="text" :placeholder="$t('Volume control')"></ui-textbox>
-      <ui-slider size="small" color="red" ariaLabel="UiSlider" v-model="volumen"></ui-slider>
+      <ui-textbox name="uitextbox" :value="volumen" @input="handleVolumen" type="number" :placeholder="$t('Volume control')" :min="0" :max="100"></ui-textbox>
+      <ui-slider size="small" color="red" ariaLabel="UiSlider" v-model="volumen" :showMarker="true"></ui-slider>
     </div>
     <pre>Data: {{ $data }}</pre>
   </div>
@@ -39,6 +35,9 @@
   }
   var dbRefStatistics = firebase.database().ref('/statistics')
   var dbRefStatisticsInterruptor = firebase.database().ref('/statistics/interruptor')
+  var dbRefStatisticsInterruptorValue = firebase.database().ref('/statistics/interruptorValue')
+  var dbRefStatisticsTextoValue = firebase.database().ref('/statistics/textoValue')
+  var dbRefStatisticsVolumenValue = firebase.database().ref('/statistics/volumenValue')
 
   export default {
     name: 'home',
@@ -46,33 +45,68 @@
       return {
         interruptor: false,
         texto: '',
-        volumen: 0,
-        dbRefStatistics,
-        dbRefStatisticsInterruptor,
-        statistics: null
+        volumen: 0
       }
+    },
+    beforeCreate() {
+      window.console.log('Esto se ejecuta ANTES de crear el componente Home.')
+    },
+    created() {
+      window.console.log('Esto se ejecuta DESPUES de crear el componente Home.')
+    },
+    beforeMount() {
+      window.console.log('Esto se ejecuta ANTES de montar el componente Home.')
+      dbRefStatisticsInterruptorValue
+        .on('value', snapshot => this.loadStatisticsInterruptorValue(snapshot.val()))
+      dbRefStatisticsTextoValue
+        .on('value', snapshot => this.loadStatisticsTextoValue(snapshot.val()))
+      dbRefStatisticsVolumenValue
+        .on('value', snapshot => this.loadStatisticsVolumenValue(snapshot.val()))
+    },
+    mounted() {
+      window.console.log('Esto se ejecuta DESPUES de montar el componente Home.')
     },
     methods: {
       encenderApagar() {
-        window.console.log('enciendeApaga')
-        this.interruptor = !this.interruptor
+        if (this.interruptor) {
+          window.console.log('Encendí el interruptor')
+        } else {
+          window.console.log('Apagé el interruptor')
+        }
         let ahora = moment().format('DD/MM/YYYY HH:mm:ss.sss')
-        dbRefStatisticsInterruptor.push({
-          fecha: ahora,
-          nuevoValor: this.interruptor
-        })
+        dbRefStatisticsInterruptor
+          .push({
+            fecha: ahora,
+            nuevoValor: this.interruptor
+          })
+          .then(() => {
+            window.console.log('Estadísticas registradas OK')
+          })
+        dbRefStatistics
+          .update({
+            interruptorValue: this.interruptor
+          })
+          .then(() => {
+            window.console.log('Interruptor actualizado en BBDD OK')
+          })
       },
       escuchar() {
         window.console.log('TODO Estoy escuchando durante n segundos ...')
       },
-      obtenerEstatistics() {
-        window.console.log('Obteniendo datos de BBDD')
-        this.dbRefStatistics
-          .on('value', snapshot => this.cargarStatistics(snapshot.val()))
+      loadStatisticsInterruptorValue(value) {
+        window.console.log('Recupero valor actual del interruptor (BBDD)')
+        this.interruptor = value
       },
-      cargarStatistics(value) {
-        window.console.log('Guardar en variable')
-        this.statistics = value
+      loadStatisticsTextoValue(value) {
+        window.console.log('Recupero valor actual del texto (BBDD)')
+        this.texto = value
+      },
+      loadStatisticsVolumenValue(value) {
+        window.console.log('Recupero valor actual del volumen (BBDD)')
+        this.volumen = parseInt(value)
+      },
+      handleVolumen(value) {
+        this.volumen = parseInt(value)
       }
     }
   }

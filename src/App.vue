@@ -16,6 +16,18 @@
       return {
       }
     },
+    beforeCreate() {
+      window.console.log('Esto se ejecuta ANTES de crear el componente App.')
+    },
+    created() {
+      window.console.log('Esto se ejecuta DESPUES de crear el componente App.')
+    },
+    beforeMount() {
+      window.console.log('Esto se ejecuta ANTES de montar el componente App.')
+    },
+    mounted() {
+      window.console.log('Esto se ejecuta DESPUES de montar el componente App.')
+    },
     watch: {
       $route(to) {
         if (to.name && to.name.indexOf('about') !== -1) {

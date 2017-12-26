@@ -1,7 +1,6 @@
 <template>
   <div id="about">
-    <h1>{{$t('about')}}</h1>
-    <h2>{{$t('version')}} {{ $root.version }}</h2>
+    <h2>{{$t('about')}} {{ $root.version }}</h2>
   </div>
 </template>
 

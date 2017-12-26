@@ -39,13 +39,16 @@ new Vue({
     window.console.log('Esto se ejecuta ANTES de crear la instancia Vue.')
   },
   created() {
-    window.console.log('Esto se ejecuta cuando se crea la instancia Vue.')
+    window.console.log('Esto se ejecuta DESPUES de crear la instancia Vue.')
   },
   beforeMount() {
     window.console.log('Esto se ejecuta ANTES de montar el elemento.')
   },
   mounted() {
     window.console.log('Esto se ejecuta DESPUES de montar el elemento.')
+  },
+  destroy() {
+    window.console.log('Esto se ejecuta ANTES de finalizar la instancia Vue.')
   },
   methods: {
     prueba: () => {
