@@ -37,8 +37,8 @@
   if (!firebase.apps.length) {
     firebase.initializeApp(config)
   }
-  const dbRefStatistics = firebase.database().ref('/statistics')
-  const dbRefStatisticsInterruptor = firebase.database().ref('/statistics/interruptor')
+  var dbRefStatistics = firebase.database().ref('/statistics')
+  var dbRefStatisticsInterruptor = firebase.database().ref('/statistics/interruptor')
 
   export default {
     name: 'home',
