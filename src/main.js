@@ -32,8 +32,6 @@ new Vue({
   i18n,
   router,
   data: {
-    version: '1.0',
-    rootData: '99'
   },
   beforeCreate() {
     window.console.log('Esto se ejecuta ANTES de crear la instancia Vue.')
@@ -51,13 +49,10 @@ new Vue({
     window.console.log('Esto se ejecuta ANTES de finalizar la instancia Vue.')
   },
   methods: {
-    prueba: () => {
-      window.console.log('haz algo')
-    }
   },
   computed: {
     unaComputed: () => {
-      return this.rootData
+      return null
     }
   },
   render: h => h(App),
