@@ -28,7 +28,7 @@
             this.version = res.data.version
           })
           .catch((err) => {
-            console.log(err)
+            console.log('¡¡Comprueba API BACK!!' + err)
           })
       }
     }

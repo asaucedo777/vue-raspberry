@@ -3,6 +3,7 @@
     <div>
       <router-link to="/home">{{$t('home')}}</router-link>
       <router-link to="/statistics">{{$t('statistics')}}</router-link>
+      <router-link to="/raspberry">{{$t('raspberry')}}</router-link>
       <router-link to="/about">{{$t('about')}}</router-link>
     </div>
     <router-view></router-view>

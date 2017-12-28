@@ -1,5 +1,6 @@
 import Home from '@/components/Home'
 import Statistics from '@/components/Statistics'
+import Raspberry from '@/components/Raspberry'
 import About from '@/components/About'
 
 export const routes = [
@@ -15,6 +16,10 @@ export const routes = [
     path: '/statistics',
     name: 'statistics',
     component: Statistics
+  }, {
+    path: '/raspberry',
+    name: 'raspberry',
+    component: Raspberry
   }, {
     path: '/about',
     name: 'about',
